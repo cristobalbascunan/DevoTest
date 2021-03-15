@@ -1,0 +1,71 @@
+#Primero es definir como obtener los divisores, los cuales almacenar, para poder hacer un sumatorio en el cual obtener resultado 0 para que sea perfecto.
+
+def calculate_divisors(n):
+    #Establecer una variable inmutable que mantenga el número a calcular para poder establecer las reglas
+    number = n
+    #Lista vacía donde incluir los divisores
+    divisors = []
+    #Lista vacía donde incluir por cual número primo se ha dividido buscando reducir hacer más pequeño el número a calcular, para evitar iteraciones grandes en el momento de sacar las variables.
+    d = []
+    nprimos=[2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,97,101]
+    #Se itera mientras el valor sea mayor a 10.000 para trabajar con valores más pequeños.
+
+    while n > 10000:
+        for x in nprimos:
+            if n > 10000:
+                #Se irán usando los primos que den resto 0 en orden de mayor a mayor. Se utiliza una lista limitada para este ejemplo.
+                if n % x == 0:
+                    n = n / x
+                    d.append(x)
+        #Se añade una claúsula break, ya que si no encuentra divisor, es porque está compuesto de números primos muy altos. Además se puede identificar facilmente, ya que los primos solo se tienen como divisor a ellos mismos y auno por lo cual directamente son clasificados como defectivo.
+        break
+                    
+    #En el caso de que se haya hecho algún tipo de reducción, se tiene que tener en cuenta el número último ya que no es el original. Los divisores saldrán del resultado de intentar cada uno de los valores como divisor, probando que el resto sea 0.
+    if d == []:
+        for i in range(1,int(n)):
+            if n % i == 0:
+                divisors.append(i)
+    else:
+        for i in range(1,int(n)+1):
+            if n % i == 0:
+                divisors.append(i)
+    #Lista vacía para incluir los valores que se desprenden del multiplicador de simplificación.        
+    divisorsf= []        
+
+    for k in divisors:
+        multiplicator = 1                 
+        #El multiplicador irá adaptando los diferentes valores siedno multiplicado en cada iteración para crear una nueva lista en la cual estarán todos los valores.
+        for a in d:
+            multiplicator = multiplicator * a
+            divisorsf.append(k*multiplicator)
+    #Los datos almacenados en una lista se añaden a la ya existente de los divisores ya conseguidos.        
+    for x in divisorsf:
+        divisors.append(x)
+    # Se convierte en Set para poder manipular la lista, en la cual se ordenarán los valores además de que en el caso de que sea >10.000 se quitará el último valor ya que este representa el propio valor.
+    divisors = set(divisors)    
+    if number > 10000:
+        divisors = sorted(list(divisors))[:-1]
+    else:
+        divisors = list(divisors)
+
+    #Se crea la función en la cual se sumará los distintos divisores, para saber que tipo de número es.
+    div_sum = 0    
+    for k in divisors:
+        div_sum = div_sum + k   
+    
+    #Finalmente dependiendo de si cumple o no las condiciones, se hará print del número con su clasificación.
+    if div_sum == number:
+        print(number, 'es un número perfecto.')
+    elif div_sum > number:
+        print(number, 'es un número abundante.')
+    else:
+        print(number, 'es un numero defectivo.')        
+    
+
+
+#Se ponen distintos números de distinta longitud para poder clasificarlos.
+
+numbers = [4, 5, 6, 22, 34, 100, 500, 2000, 2873, 10001, 5000000, 36921587, 1257812350]
+
+for x in numbers:
+    calculate_divisors(x)
