@@ -68,4 +68,4 @@ def calculate_divisors(n):
 numbers = [4, 5, 6, 22, 34, 100, 500, 2000, 2873, 10001, 5000000, 36921587, 1257812350]
 
 for x in numbers:
-    calculate_divisors(x)
+    calculate_divisors(x) 
