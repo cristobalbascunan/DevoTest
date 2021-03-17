@@ -92,5 +92,5 @@ if __name__ == '__main__':
 
     # Check resultados con versión simple iterativa
     # for x in numbers:
-    #     type_of_number_test(x)
+    #     type_of_number(x, test = True)
  
